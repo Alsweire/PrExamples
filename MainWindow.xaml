@@ -1,0 +1,133 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Plan Constructor" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="column0"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition x:Name="column2" Width="196" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition x:Name ="row1" Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Canvas Grid.Row="0" Grid.Column="0">
+            <Menu Height="20" VerticalAlignment="Top">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Создать новый файл" Click ="NewFile_Click"></MenuItem>
+                    <MenuItem Header="Открыть файл" Click="OpenFile_Click"></MenuItem>
+                    <MenuItem Header="Очистить текущий файл" Click="ClearFile_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Справка" Click="Instruction"></MenuItem>
+            </Menu>
+        </Canvas>
+        <GridSplitter Grid.Column="1"  Grid.Row="1" ShowsPreview="False"
+        HorizontalAlignment="Left" Grid.RowSpan="2" Width="0" />
+        <GridSplitter Grid.Row="2" Grid.ColumnSpan="2" Height="3"
+        HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <ScrollViewer x:Name="scrview" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Margin="0,0,5,3" Grid.RowSpan="2">
+            <Canvas x:Name ="canvas"
+                     Width="{Binding ActualWidth, ElementName=scrview}"
+                      Height="{Binding ActualHeight, ElementName=scrview}"/>
+        </ScrollViewer>
+        <Canvas Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="200">
+
+            <ListBox HorizontalAlignment="Center" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=scrview}" Width="197" BorderBrush="Transparent">
+                <ListBoxItem>
+                    <ListBox Name ="RequestDiscipline" BorderBrush="Transparent" BorderThickness="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="24" Width="183">
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                                Новая дисциплина
+                            </TextBlock>
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBox x:Name ="DisciplineName" BorderThickness="1" TextAlignment="Center" Width="152" KeyDown="DisciplineNameKeyDown" />
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ComboBox x:Name="Semester" SelectedValue="Nothing" Width="152">
+                                <sys:String>-</sys:String>
+                                <sys:String>1 семестр</sys:String>
+                                <sys:String>2 семестр</sys:String>
+                                <sys:String>3 семестр</sys:String>
+                                <sys:String>4 семестр</sys:String>
+                                <sys:String>5 семестр</sys:String>
+                                <sys:String>6 семестр</sys:String>
+                                <sys:String>7 семестр</sys:String>
+                                <sys:String>8 семестр</sys:String>
+                            </ComboBox>
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock>
+                                Комментарий
+                            </TextBlock>
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBox x:Name="CommentBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="50" Width="152" />
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <WrapPanel>
+                                <Button x:Name="CreateDiscipline" Content="Создать" Click="ButtonCreateDisciplineClick"></Button>
+                            </WrapPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </ListBoxItem>
+                <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ListBox HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Transparent">
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                                Удаление дисциплины
+                            </TextBlock>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <ComboBox x:Name="DeletingDiscipline" SelectedValue ="Nothing" Width="152"/>
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center">
+                            <Button x:Name="deletingButton" Click="ButtonDeleteDisciplineClick" Content="Удалить"/>
+                        </ListBoxItem>
+                    </ListBox>
+                </ListBoxItem>
+                <ListBoxItem Height="126" Width="176" BorderBrush="Transparent">
+                    <ListBox Height="101" Width="177" BorderBrush="Transparent">
+                        <ListBoxItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                                Связи
+                            </TextBlock>
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center">
+                            <ComboBox x:Name="Discipline1Relation" SelectedValue="Nothing" Width="152" />
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center">
+                            <ComboBox x:Name="Discipline2Relation" Width="152" />
+                        </ListBoxItem>
+                        <ListBoxItem HorizontalAlignment="Center">
+                            <WrapPanel HorizontalAlignment="Center">
+                                <Button Name="CreateRelation" Click="ButtonCreateRelationClick" Content ="Создать" />
+                                <Separator Width="5" BorderThickness="0" BorderBrush="Transparent"/>
+                                <Button Name="DeleteRelation" Click="ButtonDeleteRelationClick" Content="Удалить"/>
+                            </WrapPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </ListBoxItem>
+                <ListBoxItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button x:Name="ChangeToList" Content="Сортировать" Click="ChangeToList_Click"  Width="152" />
+                </ListBoxItem>
+                <ListBoxItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button x:Name="ChangeToGraph" Content="Отменить сортировку" Click="ChangeToGraph_Click"  Width="152" />
+                </ListBoxItem>
+            </ListBox>
+
+        </Canvas>
+        <ScrollViewer x:Name="TextSpace" Grid.ColumnSpan="3" Grid.Row="3" Background="#dfffff" RenderTransformOrigin="0.55,0.496">
+            <TextBlock Canvas.Left="60" TextWrapping="Wrap">Область для вывода информации о дисциплине</TextBlock>
+        </ScrollViewer>
+    </Grid>
+</Window>
